@@ -6,6 +6,7 @@ const Formulario = () => {
   const [categoria, setCategoria] = useState("");
   const [noticias, setNoticias] = useState([]);
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
+  const [error, setError] = useState(null);
 
   const API_KEY = "pub_017614516865446c8e878da5b2e31250";
 
@@ -30,7 +31,14 @@ const Formulario = () => {
         setNoticias(datos.results || []);
         setMostrarSpinner(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      setError(
+        "La API no está funcionando en este momento. Por favor intenta más tarde."
+      );
+    } finally {
+      setMostrarSpinner(false);
+    }
   };
 
   return (
