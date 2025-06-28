@@ -12,7 +12,8 @@ const Noticia = ({ noticia }) => {
         <Card.Header className="p-0">
           <Card.Img
             variant="top"
-            src={noticia.image_url || "https://via.placeholder.com/300x200"}
+            src={noticia.image_url || "https://placehold.co/300x200"}
+            alt={noticia.title || "Imagen de la noticia"}
           />
         </Card.Header>
         <Card.Body>

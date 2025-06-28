@@ -1,10 +1,11 @@
 import ListaNoticias from "./ListaNoticias";
-import { Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Form, Spinner } from "react-bootstrap";
+import { useState, useEffect, use } from "react";
 
 const Formulario = () => {
   const [categoria, setCategoria] = useState("");
   const [noticias, setNoticias] = useState([]);
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
 
   const API_KEY = "pub_017614516865446c8e878da5b2e31250";
 
@@ -20,14 +21,14 @@ const Formulario = () => {
 
   const obtenerNoticia = async () => {
     try {
+      setMostrarSpinner(true);
       const respuesta = await fetch(
         `https://newsdata.io/api/1/news?apikey=${API_KEY}&country=mx&language=es&category=${categoria}`
       );
-      console.log(respuesta);
       if (respuesta.status === 200) {
         const datos = await respuesta.json();
-        console.log(datos.results);
         setNoticias(datos.results || []);
+        setMostrarSpinner(false);
       }
     } catch (error) {}
   };
@@ -58,7 +59,14 @@ const Formulario = () => {
           </Form.Group>
         </Form>
       </section>
-      <ListaNoticias noticias={noticias}></ListaNoticias>
+
+      {mostrarSpinner ? (
+        <div className="d-flex justify-content-center align-items-center">
+          <Spinner animation="grow" variant="danger" />
+        </div>
+      ) : (
+        <ListaNoticias noticias={noticias}></ListaNoticias>
+      )}
     </>
   );
 };
