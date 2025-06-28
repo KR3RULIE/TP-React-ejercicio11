@@ -1,16 +1,21 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import Titulo from "./components/Titulo";
+import Formulario from "./components/Formulario";
+
 function App() {
   return (
     <>
-      <header>
-        <h1>NOTICIAS</h1>
-      </header>
-      <main></main>
+      <Titulo></Titulo>
+      <main>
+        <Formulario></Formulario>
+      </main>
       <footer className="text-center text-light bg-black py-1 sombra">
         <p>
           By{" "}
           <a
             href="https://github.com/KR3RULIE"
-            target="blank"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-decoration-none text-danger"
           >
             KR3RULIE
