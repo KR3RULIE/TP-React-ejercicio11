@@ -3,6 +3,29 @@ import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 const Formulario = () => {
+  const [categoria, setCategoria] = useState("");
+
+  const API_KEY = "pub_017614516865446c8e878da5b2e31250";
+
+  const handleChange = (e) => {
+    setCategoria(e.target.value);
+  };
+
+  useEffect(() => {
+    if (categoria) {
+      obtenerNoticia();
+    }
+  }, [categoria]);
+
+  const obtenerNoticia = async () => {
+    try {
+      const respuesta = await fetch(
+        `https://newsdata.io/api/1/news?apikey=${API_KEY}&country=mx&language=es&category=${categoria}`
+      );
+      console.log(respuesta);
+    } catch (error) {}
+  };
+
   return (
     <>
       <section className="container bg-info my-4 p-3 rounded">
@@ -11,7 +34,7 @@ const Formulario = () => {
             <Form.Label className="fw-bold me-3 w-50">
               Buscar por categoria:
             </Form.Label>
-            <Form.Select>
+            <Form.Select value={categoria} onChange={handleChange}>
               <option value="">-- Elige una opción --</option>
               <option value="top">Top</option>
               <option value="sports">Sports</option>
