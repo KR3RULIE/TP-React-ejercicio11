@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 const Formulario = () => {
   const [categoria, setCategoria] = useState("");
+  const [noticias, setNoticias] = useState([]);
 
   const API_KEY = "pub_017614516865446c8e878da5b2e31250";
 
@@ -23,6 +24,11 @@ const Formulario = () => {
         `https://newsdata.io/api/1/news?apikey=${API_KEY}&country=mx&language=es&category=${categoria}`
       );
       console.log(respuesta);
+      if (respuesta.status === 200) {
+        const datos = await respuesta.json();
+        console.log(datos.results);
+        setNoticias(datos.results || []);
+      }
     } catch (error) {}
   };
 
@@ -52,7 +58,7 @@ const Formulario = () => {
           </Form.Group>
         </Form>
       </section>
-      <ListaNoticias></ListaNoticias>
+      <ListaNoticias noticias={noticias}></ListaNoticias>
     </>
   );
 };
